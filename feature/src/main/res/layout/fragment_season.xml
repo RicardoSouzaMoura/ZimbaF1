@@ -7,10 +7,15 @@
     android:orientation="vertical"
     >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <GridView
+        android:id="@+id/gridSeason"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Season" />
+        android:layout_margin="8dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
 
 </LinearLayout>
