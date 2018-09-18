@@ -30,4 +30,12 @@ public class SeasonGridEntity {
         this.constructorChampionName = constructorChampionName;
     }
 
+    public SeasonGridEntity[] findAllSeasonGridEntities(){
+        SeasonGridEntity[] entities;
+
+
+
+        return entities;
+    }
+
 }

@@ -1,0 +1,49 @@
+{
+  "seasons": [{
+    "id": 1,
+    "driverChampionName": "Raikonnen",
+    "seasonYear": "2018",
+    "constructorChampionName": "Ferrari"
+  }, {
+    "id": 2,
+    "driverChampionName": "Senna",
+    "seasonYear": "2017",
+    "constructorChampionName": "Mac Laren"
+  },
+    {
+      "id": 3,
+      "driverChampionName": "Barrichelo",
+      "seasonYear": "2016",
+      "constructorChampionName": "Sauber"
+    },
+    {
+      "id": 4,
+      "driverChampionName": "Hamilton",
+      "seasonYear": "2015",
+      "constructorChampionName": "Renault"
+    },
+    {
+      "id": 5,
+      "driverChampionName": "Vetel",
+      "seasonYear": "2014",
+      "constructorChampionName": "Ferrari"
+    },
+    {
+      "id": 6,
+      "driverChampionName": "Raikonnen",
+      "seasonYear": "2013",
+      "constructorChampionName": "Ferrari"
+    },
+    {
+      "id": 7,
+      "driverChampionName": "Patrezzi",
+      "seasonYear": "2012",
+      "constructorChampionName": "Lotus"
+    },
+    {
+      "id": 8,
+      "driverChampionName": "Piquet",
+      "seasonYear": "2011",
+      "constructorChampionName": "Red Bull"
+    }]
+}
