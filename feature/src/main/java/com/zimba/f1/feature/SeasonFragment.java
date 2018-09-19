@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.zimba.f1.feature.entity.SeasonGridEntity;
+import com.zimba.f1.feature.service.F1Service;
+import com.zimba.f1.feature.service.SeasonGridListener;
+import com.zimba.f1.feature.service.SeasonGridListenerInterface;
 
 
 /**
@@ -30,21 +33,22 @@ public class SeasonFragment extends Fragment {
 
         GridView gridview = (GridView) seasonFragment.findViewById(R.id.gridSeason);
 
-        SeasonGridEntity[] arraySeason = new SeasonGridEntity[2];
+        F1Service f1Service = null;
+        try{
+            f1Service = new F1Service(getActivity().getApplicationContext());
 
-        SeasonGridEntity season1 = new SeasonGridEntity();
-        season1.setConstructorChampionName("Ferrari");
-        season1.setDriverChampionName("Barrichelo");
-        season1.setSeasonYear("2018");
-        arraySeason[0] = season1;
+        } catch(java.lang.InstantiationException e){
+            e.printStackTrace();
+        }
 
-        SeasonGridEntity season2 = new SeasonGridEntity();
-        season2.setConstructorChampionName("Mercedes");
-        season2.setDriverChampionName("Hamilton");
-        season2.setSeasonYear("2018");
-        arraySeason[1] = season2;
+        SeasonGridListenerInterface lSeasonGridListener = new SeasonGridListener();
+        f1Service.findAllSeasonGridEntities(lSeasonGridListener);
 
-        gridview.setAdapter(new SeasonAdapter(this.getContext(), arraySeason));
+        SeasonAdapter seasonAdapter = new SeasonAdapter(this.getContext(), lSeasonGridListener.getArraySeason());
+
+        seasonAdapter.notifyDataSetChanged();
+
+        gridview.setAdapter(seasonAdapter);
 
         return seasonFragment;
 
