@@ -1,6 +1,7 @@
 package com.zimba.f1.feature;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.GridView;
 
 import com.zimba.f1.feature.entity.SeasonGridEntity;
 import com.zimba.f1.feature.service.F1Service;
-import com.zimba.f1.feature.service.SeasonGridListener;
 import com.zimba.f1.feature.service.SeasonGridListenerInterface;
 
 
@@ -31,24 +31,32 @@ public class SeasonFragment extends Fragment {
         // Inflate the layout for this fragment
         View seasonFragment = inflater.inflate(R.layout.fragment_season, container, false);
 
-        GridView gridview = (GridView) seasonFragment.findViewById(R.id.gridSeason);
+        final GridView gridview = seasonFragment.findViewById(R.id.gridSeason);
 
         F1Service f1Service = null;
-        try{
+        try {
             f1Service = new F1Service(getActivity().getApplicationContext());
 
-        } catch(java.lang.InstantiationException e){
+        } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         }
 
-        SeasonGridListenerInterface lSeasonGridListener = new SeasonGridListener();
-        f1Service.findAllSeasonGridEntities(lSeasonGridListener);
+        final Context context = this.getContext();
 
-        SeasonAdapter seasonAdapter = new SeasonAdapter(this.getContext(), lSeasonGridListener.getArraySeason());
+        f1Service.findAllSeasonGridEntities(new SeasonGridListenerInterface() {
+            @Override
+            public void onResponse(SeasonGridEntity[] pEntities) {
+                SeasonAdapter seasonAdapter = new SeasonAdapter(context, pEntities);
+                gridview.setAdapter(seasonAdapter);
+            }
 
-        seasonAdapter.notifyDataSetChanged();
+            @Override
+            public void onError(Exception error) {
 
-        gridview.setAdapter(seasonAdapter);
+            }
+        });
+
+        //seasonAdapter.notifyDataSetChanged();
 
         return seasonFragment;
 

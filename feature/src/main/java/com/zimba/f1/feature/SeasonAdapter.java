@@ -1,6 +1,7 @@
 package com.zimba.f1.feature;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,13 +15,15 @@ public class SeasonAdapter extends BaseAdapter {
     private Context context;
     private SeasonGridEntity[] seasonGridEntities;
 
-    public SeasonAdapter(Context pContext, SeasonGridEntity[] pSeasonGridEntities){
+    public SeasonAdapter(Context pContext, SeasonGridEntity[] pSeasonGridEntities) {
         this.context = pContext;
         this.seasonGridEntities = pSeasonGridEntities;
     }
+
     @Override
     public int getCount() {
-        return seasonGridEntities.length;
+
+        return seasonGridEntities != null ? seasonGridEntities.length : 0;
     }
 
     @Override
@@ -57,6 +60,15 @@ public class SeasonAdapter extends BaseAdapter {
 
         } else {
             seasonGridLayout = (LinearLayout) convertView;
+            SeasonGridEntity seasonGridEntity = seasonGridEntities[position];
+            ((TextView)((LinearLayout) convertView).getChildAt(0))
+                    .setText(seasonGridEntity.getDriverChampionName());
+            ((TextView)((LinearLayout) convertView).getChildAt(1))
+                    .setText(seasonGridEntity.getSeasonYear());
+            ((TextView)((LinearLayout) convertView).getChildAt(2))
+                    .setText(seasonGridEntity.getConstructorChampionName());
+
+
         }
         return seasonGridLayout;
     }
