@@ -1,7 +1,7 @@
 package com.zimba.f1.feature;
 
 import android.content.Context;
-import android.speech.tts.TextToSpeech;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,9 +42,20 @@ public class SeasonAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             seasonGridLayout = new LinearLayout(context);
+            final SeasonGridEntity seasonGridEntity = seasonGridEntities[position];
+
+            seasonGridLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RacesResultsActivity.class);
+                    intent.putExtra("SEASON_YEAR", seasonGridEntity.getSeasonYear());
+                    context.startActivity(intent);
+                }
+            });
+
             seasonGridLayout.setOrientation(LinearLayout.VERTICAL);
 
-            SeasonGridEntity seasonGridEntity = seasonGridEntities[position];
+
 
             TextView driverChampionNameTV = new TextView(context);
             driverChampionNameTV.setText(seasonGridEntity.getDriverChampionName());
@@ -61,11 +72,11 @@ public class SeasonAdapter extends BaseAdapter {
         } else {
             seasonGridLayout = (LinearLayout) convertView;
             SeasonGridEntity seasonGridEntity = seasonGridEntities[position];
-            ((TextView)((LinearLayout) convertView).getChildAt(0))
+            ((TextView) ((LinearLayout) convertView).getChildAt(0))
                     .setText(seasonGridEntity.getDriverChampionName());
-            ((TextView)((LinearLayout) convertView).getChildAt(1))
+            ((TextView) ((LinearLayout) convertView).getChildAt(1))
                     .setText(seasonGridEntity.getSeasonYear());
-            ((TextView)((LinearLayout) convertView).getChildAt(2))
+            ((TextView) ((LinearLayout) convertView).getChildAt(2))
                     .setText(seasonGridEntity.getConstructorChampionName());
 
 
