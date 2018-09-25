@@ -55,8 +55,6 @@ public class SeasonAdapter extends BaseAdapter {
 
             seasonGridLayout.setOrientation(LinearLayout.VERTICAL);
 
-
-
             TextView driverChampionNameTV = new TextView(context);
             driverChampionNameTV.setText(seasonGridEntity.getDriverChampionName());
             seasonGridLayout.addView(driverChampionNameTV);

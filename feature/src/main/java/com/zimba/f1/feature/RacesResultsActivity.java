@@ -5,7 +5,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.zimba.f1.feature.entity.RaceResultsEntity;
 import com.zimba.f1.feature.service.F1Service;
+import com.zimba.f1.feature.service.RacesResultsListenerInterface;
 
 public class RacesResultsActivity extends AppCompatActivity {
 
@@ -19,12 +21,29 @@ public class RacesResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_races);
 
-        racesResultsAdapter = new RacesResultsAdapter(getSupportFragmentManager());
-
+        RaceResultsEntity raceResults = null;
         viewPager = this.findViewById(R.id.pagerRaceResults);
-        viewPager.setAdapter(racesResultsAdapter);
-
         tabLayout = this.findViewById(R.id.tabsRacesResults);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        try {
+            F1Service f1Service = new F1Service(this.getApplicationContext());
+            f1Service.findRaceResultsBySeasonYear("2018", new RacesResultsListenerInterface() {
+                @Override
+                public void onResponse(RaceResultsEntity[] pEntities) {
+                    racesResultsAdapter = new RacesResultsAdapter(getSupportFragmentManager(), pEntities);
+                    viewPager.setAdapter(racesResultsAdapter);
+                    tabLayout.setupWithViewPager(viewPager);
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    error.printStackTrace();
+                }
+            });
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 }

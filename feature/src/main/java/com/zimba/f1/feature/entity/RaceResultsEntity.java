@@ -1,8 +1,8 @@
 package com.zimba.f1.feature.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class RaceResultsEntity {
+public class RaceResultsEntity implements Serializable{
 
     private String raceName;
     private String seasonYear;
@@ -12,7 +12,7 @@ public class RaceResultsEntity {
     private String locality;
     private String country;
 
-    private List<RacePositionEntity> positions;
+    private RacePositionEntity[] positions;
 
     public String getTime() {
         return time;
@@ -70,12 +70,11 @@ public class RaceResultsEntity {
         this.country = country;
     }
 
-    public List<RacePositionEntity> getPositions() {
+    public RacePositionEntity[] getPositions() {
         return positions;
     }
 
-    public void setPositions(List<RacePositionEntity> positions) {
+    public void setPositions(RacePositionEntity[] positions) {
         this.positions = positions;
     }
-
 }
