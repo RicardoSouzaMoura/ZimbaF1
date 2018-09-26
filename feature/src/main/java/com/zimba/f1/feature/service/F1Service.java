@@ -7,7 +7,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.zimba.f1.feature.entity.RacePositionEntity;
 import com.zimba.f1.feature.entity.RaceResultsEntity;
@@ -16,6 +15,9 @@ import com.zimba.f1.feature.entity.SeasonGridEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class F1Service {
@@ -46,12 +48,14 @@ public class F1Service {
                             JSONArray standingsList = mRData
                                     .getJSONObject("StandingsTable")
                                     .getJSONArray("StandingsLists");
-                            entities = new SeasonGridEntity[mRData.getInt("total")];
-                            int j = standingsList.length() - 1;
+                            entities = new SeasonGridEntity[mRData.getInt("total")+1];
+                            int j = standingsList.length();
+                            String lastYear = "";
                             for (int i = 0; i < standingsList.length(); i++) {
                                 SeasonGridEntity entity = new SeasonGridEntity();
                                 JSONObject standing = standingsList.getJSONObject(i);
                                 entity.setSeasonYear(standing.getString("season"));
+                                lastYear = entity.getSeasonYear();
                                 JSONArray driverStandings = standing.getJSONArray("DriverStandings");
 
                                 JSONObject driver = driverStandings.getJSONObject(0).getJSONObject("Driver");
@@ -62,8 +66,24 @@ public class F1Service {
                                 entity.setConstructorChampionName(constructor.getString("name"));
 
                                 entities[j--] = entity;
-
                             }
+                            // colocando o ano mais recente. Se o campeonato ainda nao tiver acabado
+                            // nao vem no resultado da query feita. Mas se tiver acabado deve vir.
+                            // entao ou coloco o ano corrente (no caso do campeonato nao tiver acabado)
+                            // ou o ano seguinte (caso contrário)
+                            Date dataHoje = new Date();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(dataHoje);
+                            if (!lastYear.equalsIgnoreCase(String.valueOf(calendar.get(Calendar.YEAR)))){
+                                SeasonGridEntity entity = new SeasonGridEntity();
+                                entity.setSeasonYear(String.valueOf(calendar.get(Calendar.YEAR)));
+                                entities[0] = entity;
+                            } else{
+                                SeasonGridEntity entity = new SeasonGridEntity();
+                                entity.setSeasonYear(String.valueOf(calendar.get(Calendar.YEAR)+1));
+                                entities[0] = entity;
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -119,7 +139,7 @@ public class F1Service {
                                 RacePositionEntity[] racePositionEntities = new RacePositionEntity[results.length()];
                                 for (int j = 0; j < results.length(); j++) {
                                     RacePositionEntity racePositionEntity = new RacePositionEntity();
-                                    JSONObject result = results.getJSONObject(i);
+                                    JSONObject result = results.getJSONObject(j);
 
                                     racePositionEntity.setConstructorName(result.getJSONObject("Constructor").getString("name"));
                                     racePositionEntity.setConstructorNumber(result.getString("number"));

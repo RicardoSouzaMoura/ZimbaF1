@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zimba.f1.feature.entity.RaceResultsEntity;
@@ -30,7 +31,12 @@ public class RaceResultsFragment extends Fragment {
         TextView circuitNameTV = inflate.findViewById(R.id.circuitName);
         TextView dateTimeRaceTV = inflate.findViewById(R.id.dateTimeRaceId);
 
-        RaceResultsEntity entity = (RaceResultsEntity)getArguments().get("raceResults");
+        ListView listViewPositions = inflate.findViewById(R.id.raceResults_drivers);
+
+        RaceResultsEntity entity = (RaceResultsEntity) getArguments().get("raceResults");
+
+        ListViewRaceResultsDriversAdapter listViewAdapter = new ListViewRaceResultsDriversAdapter(entity.getPositions());
+        listViewPositions.setAdapter(listViewAdapter);
 
         circuitNameTV.setText(entity.getCircuitName());
         dateTimeRaceTV.setText(entity.getDate() + " " + entity.getTime());
