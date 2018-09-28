@@ -1,4 +1,4 @@
-package com.zimba.f1.feature;
+package com.zimba.f1.feature.activity.raceresults;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,11 @@ import com.zimba.f1.feature.entity.SeasonGridEntity;
 
 import org.w3c.dom.Text;
 
-public class ListViewRaceResultsDriversAdapter extends BaseAdapter {
+public class ListViewRaceResultsGpsDriversAdapter extends BaseAdapter {
 
     private RacePositionEntity[] racePositionEntities;
 
-    public ListViewRaceResultsDriversAdapter(RacePositionEntity[] pRacePositionEntity) {
+    public ListViewRaceResultsGpsDriversAdapter(RacePositionEntity[] pRacePositionEntity) {
         super();
         this.racePositionEntities = pRacePositionEntity;
     }

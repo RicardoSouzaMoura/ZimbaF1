@@ -1,4 +1,4 @@
-package com.zimba.f1.feature;
+package com.zimba.f1.feature.activity.raceresults;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.zimba.f1.feature.entity.RaceResultsEntity;
 
-public class RacesResultsAdapter extends FragmentStatePagerAdapter {
+public class RacesResultsGpsAdapter extends FragmentStatePagerAdapter {
 
     private RaceResultsEntity[] raceResults;
 
-    public RacesResultsAdapter(FragmentManager fm, RaceResultsEntity[] pRacesResults) {
+    public RacesResultsGpsAdapter(FragmentManager fm, RaceResultsEntity[] pRacesResults) {
         super(fm);
         this.raceResults = pRacesResults;
     }
@@ -22,7 +22,7 @@ public class RacesResultsAdapter extends FragmentStatePagerAdapter {
         RaceResultsEntity raceResultsEntity = raceResults[i];
         Bundle args = new Bundle();
         args.putSerializable("raceResults", raceResultsEntity);
-        RaceResultsFragment raceResultsFragment = new RaceResultsFragment();
+        RaceResultsGpsFragment raceResultsFragment = new RaceResultsGpsFragment();
         raceResultsFragment.setArguments(args);
         return raceResultsFragment;
     }

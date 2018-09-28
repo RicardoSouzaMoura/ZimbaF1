@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zimba.f1.feature.activity.raceresults.RacesResultsGpsActivity;
 import com.zimba.f1.feature.entity.SeasonGridEntity;
 
 public class SeasonAdapter extends BaseAdapter {
@@ -47,7 +48,7 @@ public class SeasonAdapter extends BaseAdapter {
             seasonGridLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, RacesResultsActivity.class);
+                    Intent intent = new Intent(context, RacesResultsGpsActivity.class);
                     intent.putExtra("SEASON_YEAR", seasonGridEntity.getSeasonYear());
                     context.startActivity(intent);
                 }

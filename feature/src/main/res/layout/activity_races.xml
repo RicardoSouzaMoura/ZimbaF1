@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RacesResultsActivity">
+    tools:context=".activity.raceresults.RacesResultsGpsActivity">
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"

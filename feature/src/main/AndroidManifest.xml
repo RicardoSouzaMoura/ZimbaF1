@@ -21,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RacesResultsActivity">
+        <activity
+            android:name=".activity.raceresults.RacesResultsGpsActivity"
+            android:parentActivityName=".MainActivity">
             <intent-filter android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -30,6 +32,32 @@
 
                 <data
                     android:host="zimbaf1.com"
+                    android:pathPattern="/.*"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.raceresults.RacesResultsGeneralActivity"
+            android:label="@string/title_activity_race_results_general"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.zimba.f1.feature.MainActivity" />
+
+            <intent-filter android:order="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="zimba.com"
                     android:pathPattern="/.*"
                     android:scheme="https" />
             </intent-filter>

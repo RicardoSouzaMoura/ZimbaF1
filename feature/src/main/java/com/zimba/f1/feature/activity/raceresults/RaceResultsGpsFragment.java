@@ -1,4 +1,4 @@
-package com.zimba.f1.feature;
+package com.zimba.f1.feature.activity.raceresults;
 
 
 import android.os.Bundle;
@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.zimba.f1.feature.R;
 import com.zimba.f1.feature.entity.RaceResultsEntity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RaceResultsFragment extends Fragment {
+public class RaceResultsGpsFragment extends Fragment {
 
 
-    public RaceResultsFragment() {
+    public RaceResultsGpsFragment() {
         // Required empty public constructor
     }
 
@@ -35,7 +36,7 @@ public class RaceResultsFragment extends Fragment {
 
         RaceResultsEntity entity = (RaceResultsEntity) getArguments().get("raceResults");
 
-        ListViewRaceResultsDriversAdapter listViewAdapter = new ListViewRaceResultsDriversAdapter(entity.getPositions());
+        ListViewRaceResultsGpsDriversAdapter listViewAdapter = new ListViewRaceResultsGpsDriversAdapter(entity.getPositions());
         listViewPositions.setAdapter(listViewAdapter);
 
         circuitNameTV.setText(entity.getCircuitName());
