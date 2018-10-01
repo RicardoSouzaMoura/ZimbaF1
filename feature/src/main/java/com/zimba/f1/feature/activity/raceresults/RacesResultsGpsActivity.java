@@ -27,6 +27,8 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_races);
 
+
+
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
@@ -69,8 +71,8 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         if (menuId == R.id.raceresults_menu_geral) {// User chose the "General" item, show the app settings UI...
-            Intent intent = new Intent(this.getApplicationContext(), RacesResultsGeneralActivity.class);
-            this.getApplicationContext().startActivity(intent);
+            Intent intent = new Intent(this, RacesResultsGeneralActivity.class);
+            this.startActivity(intent);
             return true;
         } else {// If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.

@@ -1,24 +1,22 @@
 package com.zimba.f1.feature.activity.raceresults;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.zimba.f1.feature.R;
+import com.zimba.f1.feature.entity.RacePositionEntity;
 
 public class RacesResultsGeneralActivity extends AppCompatActivity {
 
@@ -37,30 +35,23 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_race_results_general);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.containerResultsGeneral);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        tabLayout = this.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 
@@ -90,25 +81,21 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    public static class GeneralDriverFragment extends Fragment {
 
-        public PlaceholderFragment() {
+
+        public GeneralDriverFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
+        public static GeneralDriverFragment newInstance(RacePositionEntity[] racePositionEntities) {
+            GeneralDriverFragment fragment = new GeneralDriverFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("RACE_POSITIONS", racePositionEntities);
+            fragment.setArguments(bundle);
             return fragment;
         }
 
@@ -116,8 +103,49 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            ListView listViewDrivers = rootView.findViewById(R.id.raceResults_general);
+
+            RacePositionEntity[] entity = (RacePositionEntity[]) getArguments().get("RACE_POSITIONS");
+
+            ListViewRaceResultsGeneralDriversAdapter listViewAdapter = new ListViewRaceResultsGeneralDriversAdapter(entity);
+            listViewDrivers.setAdapter(listViewAdapter);
+
+            return rootView;
+        }
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class GeneralConstructorFragment extends Fragment {
+
+
+        public GeneralConstructorFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static GeneralConstructorFragment newInstance(RacePositionEntity[] racePositionEntities) {
+            GeneralConstructorFragment fragment = new GeneralConstructorFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("RACE_POSITIONS", racePositionEntities);
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
+            ListView listViewConstructors = rootView.findViewById(R.id.raceResults_general);
+
+            RacePositionEntity[] entity = (RacePositionEntity[]) getArguments().get("RACE_POSITIONS");
+
+            ListViewRaceResultsGeneralConstructorAdapter listViewAdapter = new ListViewRaceResultsGeneralConstructorAdapter(entity);
+            listViewConstructors.setAdapter(listViewAdapter);
+
             return rootView;
         }
     }
@@ -134,15 +162,41 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            switch (position) {
+                case 0: {
+                    RacePositionEntity[] racesPositions = new RacePositionEntity[1];
+                    GeneralDriverFragment generalDriverFragment = GeneralDriverFragment.newInstance(racesPositions);
+                    return generalDriverFragment;
+                }
+                case 1: {
+                    RacePositionEntity[] racesPositions = new RacePositionEntity[1];
+                    GeneralConstructorFragment generalConstructorFragment = GeneralConstructorFragment.newInstance(racesPositions);
+                    return generalConstructorFragment;
+                }
+            }
+            return null;
+
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0: {
+                    return "Pilotos";
+                }
+                case 1: {
+                    return "Construtores";
+                }
+            }
+            return super.getPageTitle(position);
         }
     }
 }
