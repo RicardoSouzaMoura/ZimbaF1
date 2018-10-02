@@ -31,6 +31,64 @@ public class F1Service {
         this.context = pContext;
     }
 
+    public void findAllConstructorResultsBySeasonYear(final String pSeasonYear, final ConstructorResultsListenerInterface pListener){
+
+    }
+
+    public void findAllDriverResultsBySeasonYear(final String pSeasonYear, final DriverResultsListenerInterface pListener){
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://ergast.com/api/f1/"+pSeasonYear+"/driverStandings.json?limit=1000";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        RacePositionEntity[] entities = null;
+                        try {
+                            JSONObject mRData = response.getJSONObject("MRData");
+                            JSONArray drivers = mRData
+                                    .getJSONObject("StandingsTable")
+                                    .getJSONArray("StandingsLists")
+                                    .getJSONObject(0)
+                                    .getJSONArray("DriverStandings");
+                            entities = new RacePositionEntity[drivers.length()];
+                            for (int i = 0; i < drivers.length(); i++) {
+                                RacePositionEntity entity = new RacePositionEntity();
+                                JSONObject driver = drivers.getJSONObject(i);
+                                entity.setPoints(driver.getString("points"));
+
+                                JSONObject jsonDriver = driver.getJSONObject("Driver");
+                                entity.setDriverName(jsonDriver.getString("givenName") + " " + jsonDriver.getString("familyName"));
+
+                                JSONObject jsonConstructor = driver.getJSONArray("Constructors").getJSONObject(0);
+                                entity.setConstructorName(jsonConstructor.getString("name"));
+
+                                entities[i] = entity;
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        pListener.onResponse(entities);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pListener.onError(error);
+
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+
+    }
+
     public void findAllSeasonGridEntities(final SeasonGridListenerInterface pListener) {
 
         // Instantiate the RequestQueue.

@@ -52,7 +52,7 @@ public class SeasonFragment extends Fragment {
 
             @Override
             public void onError(Exception error) {
-
+                error.printStackTrace();
             }
         });
 

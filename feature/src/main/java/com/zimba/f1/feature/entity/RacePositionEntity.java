@@ -1,6 +1,8 @@
 package com.zimba.f1.feature.entity;
 
-public class RacePositionEntity {
+import java.io.Serializable;
+
+public class RacePositionEntity implements Serializable {
 
     private String position;
     private String driverName;

@@ -72,6 +72,7 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
         int menuId = item.getItemId();
         if (menuId == R.id.raceresults_menu_geral) {// User chose the "General" item, show the app settings UI...
             Intent intent = new Intent(this, RacesResultsGeneralActivity.class);
+            intent.putExtra("SEASON_YEAR", seasonYear);
             this.startActivity(intent);
             return true;
         } else {// If we got here, the user's action was not recognized.

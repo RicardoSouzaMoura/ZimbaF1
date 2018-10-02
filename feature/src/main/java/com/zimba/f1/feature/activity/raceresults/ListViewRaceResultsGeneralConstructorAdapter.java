@@ -45,37 +45,23 @@ public class ListViewRaceResultsGeneralConstructorAdapter extends BaseAdapter {
             layoutLayer1.setOrientation(LinearLayout.HORIZONTAL);
             ImageView fotoDriver = new ImageView(parent.getContext());
 
-            LinearLayout layoutDriverInfo = new LinearLayout(parent.getContext());
-            TextView driverNameTV = new TextView(parent.getContext());
-            driverNameTV.setText(racePositionEntity.getDriverName());
-            TextView constructNameTV = new TextView(parent.getContext());
-            constructNameTV.setText(racePositionEntity.getConstructorName() + " #" + racePositionEntity.getConstructorNumber());
-            layoutDriverInfo.setOrientation(LinearLayout.VERTICAL);
-            layoutDriverInfo.addView(driverNameTV);
-            layoutDriverInfo.addView(constructNameTV);
+            TextView constructorNameTV = new TextView(parent.getContext());
+            constructorNameTV.setText(racePositionEntity.getConstructorName());
+            layoutLayer1.addView(constructorNameTV);
 
-            LinearLayout layoutPoints = new LinearLayout(parent.getContext());
             TextView pointsTV = new TextView(parent.getContext());
             pointsTV.setText(racePositionEntity.getPoints() + " pontos");
-            layoutPoints.setOrientation(LinearLayout.VERTICAL);
-            layoutPoints.addView(pointsTV);
+            layoutLayer1.addView(pointsTV);
 
-            layoutLayer1.addView(fotoDriver);
-            layoutLayer1.addView(layoutDriverInfo);
-            layoutLayer1.addView(layoutPoints);
         }
         else {
                 layoutLayer1 = (LinearLayout) convertView;
                 ImageView fotoDriver = (ImageView) layoutLayer1.getChildAt(0);
 
-                LinearLayout layoutDriverInfo = (LinearLayout) layoutLayer1.getChildAt(1);
-                TextView driverNameTV = (TextView)layoutDriverInfo.getChildAt(0);
-                driverNameTV.setText(racePositionEntity.getDriverName());
-                TextView constructNameTV = (TextView)layoutDriverInfo.getChildAt(1);
-                constructNameTV.setText(racePositionEntity.getConstructorName() + " #" + racePositionEntity.getConstructorNumber());
+                TextView constructNameTV = (TextView)layoutLayer1.getChildAt(1);
+                constructNameTV.setText(racePositionEntity.getConstructorName());
 
-                LinearLayout layoutPoints = (LinearLayout) layoutLayer1.getChildAt(2);
-                TextView pointsTV = (TextView)layoutPoints.getChildAt(0);
+                TextView pointsTV = (TextView)layoutLayer1.getChildAt(2);
                 pointsTV.setText(racePositionEntity.getPoints() + " pontos");
 
             }

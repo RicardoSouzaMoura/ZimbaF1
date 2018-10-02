@@ -17,6 +17,9 @@ import android.widget.ListView;
 
 import com.zimba.f1.feature.R;
 import com.zimba.f1.feature.entity.RacePositionEntity;
+import com.zimba.f1.feature.service.ConstructorResultsListenerInterface;
+import com.zimba.f1.feature.service.DriverResultsListenerInterface;
+import com.zimba.f1.feature.service.F1Service;
 
 public class RacesResultsGeneralActivity extends AppCompatActivity {
 
@@ -37,20 +40,24 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
 
+    private String seasonYear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.seasonYear = getIntent().getStringExtra("SEASON_YEAR");
         setContentView(R.layout.activity_race_results_general);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this.seasonYear);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.containerResultsGeneral);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        tabLayout = this.findViewById(R.id.tabs);
+        tabLayout = this.findViewById(R.id.tabsRacesResultsGeneral);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
@@ -91,10 +98,10 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static GeneralDriverFragment newInstance(RacePositionEntity[] racePositionEntities) {
+        public static GeneralDriverFragment newInstance(String pSeasonYear) {
             GeneralDriverFragment fragment = new GeneralDriverFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("RACE_POSITIONS", racePositionEntities);
+            bundle.putString("SEASON_YEAR", pSeasonYear);
             fragment.setArguments(bundle);
             return fragment;
         }
@@ -103,12 +110,25 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
-            ListView listViewDrivers = rootView.findViewById(R.id.raceResults_general);
+            final ListView listViewDrivers = rootView.findViewById(R.id.raceResults_general);
 
-            RacePositionEntity[] entity = (RacePositionEntity[]) getArguments().get("RACE_POSITIONS");
+            try {
+                F1Service f1Service = new F1Service(this.getContext());
+                f1Service.findAllDriverResultsBySeasonYear(this.getArguments().getString("SEASON_YEAR"), new DriverResultsListenerInterface() {
+                    @Override
+                    public void onResponse(RacePositionEntity[] pEntities) {
+                        ListViewRaceResultsGeneralDriversAdapter listViewAdapter = new ListViewRaceResultsGeneralDriversAdapter(pEntities);
+                        listViewDrivers.setAdapter(listViewAdapter);
+                    }
 
-            ListViewRaceResultsGeneralDriversAdapter listViewAdapter = new ListViewRaceResultsGeneralDriversAdapter(entity);
-            listViewDrivers.setAdapter(listViewAdapter);
+                    @Override
+                    public void onError(Exception error) {
+                        error.printStackTrace();
+                    }
+                });
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            }
 
             return rootView;
         }
@@ -127,11 +147,13 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static GeneralConstructorFragment newInstance(RacePositionEntity[] racePositionEntities) {
+        public static GeneralConstructorFragment newInstance(String pSeasonYear) {
             GeneralConstructorFragment fragment = new GeneralConstructorFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("RACE_POSITIONS", racePositionEntities);
+
+            bundle.putString("SEASON_YEAR", pSeasonYear);
             fragment.setArguments(bundle);
+
             return fragment;
         }
 
@@ -139,12 +161,25 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
-            ListView listViewConstructors = rootView.findViewById(R.id.raceResults_general);
+            final ListView listViewConstructors = rootView.findViewById(R.id.raceResults_general);
 
-            RacePositionEntity[] entity = (RacePositionEntity[]) getArguments().get("RACE_POSITIONS");
+            try {
+                F1Service f1Service = new F1Service(this.getContext());
+                f1Service.findAllConstructorResultsBySeasonYear(this.getArguments().getString("SEASON_YEAR"), new ConstructorResultsListenerInterface() {
+                    @Override
+                    public void onResponse(RacePositionEntity[] pEntities) {
+                        ListViewRaceResultsGeneralConstructorAdapter listViewAdapter = new ListViewRaceResultsGeneralConstructorAdapter(pEntities);
+                        listViewConstructors.setAdapter(listViewAdapter);
+                    }
 
-            ListViewRaceResultsGeneralConstructorAdapter listViewAdapter = new ListViewRaceResultsGeneralConstructorAdapter(entity);
-            listViewConstructors.setAdapter(listViewAdapter);
+                    @Override
+                    public void onError(Exception error) {
+                        error.printStackTrace();
+                    }
+                });
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            }
 
             return rootView;
         }
@@ -156,8 +191,12 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private String seasonYear;
+        private F1Service f1Service;
+
+        public SectionsPagerAdapter(FragmentManager fm, String pSeasonYear) {
             super(fm);
+            this.seasonYear = pSeasonYear;
         }
 
         @Override
@@ -165,13 +204,11 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0: {
-                    RacePositionEntity[] racesPositions = new RacePositionEntity[1];
-                    GeneralDriverFragment generalDriverFragment = GeneralDriverFragment.newInstance(racesPositions);
+                    GeneralDriverFragment generalDriverFragment = GeneralDriverFragment.newInstance(this.seasonYear);
                     return generalDriverFragment;
                 }
                 case 1: {
-                    RacePositionEntity[] racesPositions = new RacePositionEntity[1];
-                    GeneralConstructorFragment generalConstructorFragment = GeneralConstructorFragment.newInstance(racesPositions);
+                    GeneralConstructorFragment generalConstructorFragment = GeneralConstructorFragment.newInstance(this.seasonYear);
                     return generalConstructorFragment;
                 }
             }
