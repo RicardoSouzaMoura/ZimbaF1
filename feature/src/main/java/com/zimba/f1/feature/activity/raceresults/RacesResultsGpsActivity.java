@@ -27,14 +27,13 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_races);
 
-
-
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
         this.seasonYear = getIntent().getStringExtra("SEASON_YEAR");
+        ab.setTitle("Temporada "+this.seasonYear);
 
         viewPager = this.findViewById(R.id.pagerRaceResults);
         tabLayout = this.findViewById(R.id.tabsRacesResults);

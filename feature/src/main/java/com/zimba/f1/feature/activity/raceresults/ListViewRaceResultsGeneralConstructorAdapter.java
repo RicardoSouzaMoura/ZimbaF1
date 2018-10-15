@@ -43,11 +43,23 @@ public class ListViewRaceResultsGeneralConstructorAdapter extends BaseAdapter {
             layoutLayer1 = new LinearLayout(parent.getContext());
 
             layoutLayer1.setOrientation(LinearLayout.HORIZONTAL);
-            ImageView fotoDriver = new ImageView(parent.getContext());
+            ImageView fotoConstructor = new ImageView(parent.getContext());
+
+            layoutLayer1.addView(fotoConstructor);
+
+            LinearLayout layoutLayer2 = new LinearLayout(parent.getContext());
+            layoutLayer2.setOrientation(LinearLayout.VERTICAL);
 
             TextView constructorNameTV = new TextView(parent.getContext());
             constructorNameTV.setText(racePositionEntity.getConstructorName());
-            layoutLayer1.addView(constructorNameTV);
+
+            TextView constructorCountryTV = new TextView(parent.getContext());
+            constructorCountryTV.setText(racePositionEntity.getConstructorCountry());
+
+            layoutLayer2.addView(constructorNameTV);
+            layoutLayer2.addView(constructorCountryTV);
+
+            layoutLayer1.addView(layoutLayer2);
 
             TextView pointsTV = new TextView(parent.getContext());
             pointsTV.setText(racePositionEntity.getPoints() + " pontos");
@@ -56,10 +68,15 @@ public class ListViewRaceResultsGeneralConstructorAdapter extends BaseAdapter {
         }
         else {
                 layoutLayer1 = (LinearLayout) convertView;
-                ImageView fotoDriver = (ImageView) layoutLayer1.getChildAt(0);
+                ImageView fotoConstructor = (ImageView) layoutLayer1.getChildAt(0);
 
-                TextView constructNameTV = (TextView)layoutLayer1.getChildAt(1);
+                LinearLayout layoutLayer2 = (LinearLayout)layoutLayer1.getChildAt(1);
+
+                TextView constructNameTV = (TextView)layoutLayer2.getChildAt(0);
                 constructNameTV.setText(racePositionEntity.getConstructorName());
+
+                TextView constructCountryTV = (TextView)layoutLayer2.getChildAt(1);
+                constructCountryTV.setText(racePositionEntity.getConstructorCountry());
 
                 TextView pointsTV = (TextView)layoutLayer1.getChildAt(2);
                 pointsTV.setText(racePositionEntity.getPoints() + " pontos");

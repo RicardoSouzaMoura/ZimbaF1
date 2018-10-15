@@ -49,7 +49,7 @@ public class ListViewRaceResultsGeneralDriversAdapter extends BaseAdapter {
             TextView driverNameTV = new TextView(parent.getContext());
             driverNameTV.setText(racePositionEntity.getDriverName());
             TextView constructNameTV = new TextView(parent.getContext());
-            constructNameTV.setText(racePositionEntity.getConstructorName() + " #" + racePositionEntity.getConstructorNumber());
+            constructNameTV.setText(racePositionEntity.getConstructorName());
             layoutDriverInfo.setOrientation(LinearLayout.VERTICAL);
             layoutDriverInfo.addView(driverNameTV);
             layoutDriverInfo.addView(constructNameTV);
@@ -72,7 +72,7 @@ public class ListViewRaceResultsGeneralDriversAdapter extends BaseAdapter {
                 TextView driverNameTV = (TextView)layoutDriverInfo.getChildAt(0);
                 driverNameTV.setText(racePositionEntity.getDriverName());
                 TextView constructNameTV = (TextView)layoutDriverInfo.getChildAt(1);
-                constructNameTV.setText(racePositionEntity.getConstructorName() + " #" + racePositionEntity.getConstructorNumber());
+                constructNameTV.setText(racePositionEntity.getConstructorName());
 
                 LinearLayout layoutPoints = (LinearLayout) layoutLayer1.getChildAt(2);
                 TextView pointsTV = (TextView)layoutPoints.getChildAt(0);

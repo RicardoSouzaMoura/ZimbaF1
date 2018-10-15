@@ -52,7 +52,7 @@ public class ListViewRaceResultsGpsDriversAdapter extends BaseAdapter {
             TextView driverNameTV = new TextView(parent.getContext());
             driverNameTV.setText(racePositionEntity.getDriverName());
             TextView constructNameTV = new TextView(parent.getContext());
-            constructNameTV.setText(racePositionEntity.getConstructorName());
+            constructNameTV.setText(racePositionEntity.getConstructorName() + " #" + racePositionEntity.getConstructorNumber());
             layoutDriverInfo.setOrientation(LinearLayout.VERTICAL);
             layoutDriverInfo.addView(driverNameTV);
             layoutDriverInfo.addView(constructNameTV);

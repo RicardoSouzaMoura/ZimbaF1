@@ -1,5 +1,6 @@
 package com.zimba.f1.feature.activity.raceresults;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +51,11 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
         this.seasonYear = getIntent().getStringExtra("SEASON_YEAR");
         setContentView(R.layout.activity_race_results_general);
 
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this.seasonYear);
@@ -72,17 +79,14 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        int menuId = item.getItemId();
+        if (menuId == R.id.action_races_menu) {
+            // desempilhar a activity
             return true;
+        } else {// If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**

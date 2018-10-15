@@ -10,6 +10,7 @@ public class RacePositionEntity implements Serializable {
     private String constructorNumber;
     private String points;
     private String time;
+    private String constructorCountry;
 
     public String getPosition() {
         return position;
@@ -57,5 +58,13 @@ public class RacePositionEntity implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getConstructorCountry() {
+        return constructorCountry;
+    }
+
+    public void setConstructorCountry(String constructorCountry) {
+        this.constructorCountry = constructorCountry;
     }
 }

@@ -32,7 +32,53 @@ public class F1Service {
     }
 
     public void findAllConstructorResultsBySeasonYear(final String pSeasonYear, final ConstructorResultsListenerInterface pListener){
+// Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "https://ergast.com/api/f1/"+pSeasonYear+"/constructorStandings.json?limit=1000";
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        RacePositionEntity[] entities = null;
+                        try {
+                            JSONObject mRData = response.getJSONObject("MRData");
+                            JSONArray constructors = mRData
+                                    .getJSONObject("StandingsTable")
+                                    .getJSONArray("StandingsLists")
+                                    .getJSONObject(0)
+                                    .getJSONArray("ConstructorStandings");
+                            entities = new RacePositionEntity[constructors.length()];
+                            for (int i = 0; i < constructors.length(); i++) {
+                                RacePositionEntity entity = new RacePositionEntity();
+                                JSONObject constructor = constructors.getJSONObject(i);
+                                entity.setPoints(constructor.getString("points"));
+
+                                JSONObject jsonConstructor = constructor.getJSONObject("Constructor");
+                                entity.setConstructorName(jsonConstructor.getString("name"));
+                                entity.setConstructorCountry(jsonConstructor.getString("nationality"));
+
+                                entities[i] = entity;
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        pListener.onResponse(entities);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pListener.onError(error);
+
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
     }
 
     public void findAllDriverResultsBySeasonYear(final String pSeasonYear, final DriverResultsListenerInterface pListener){
