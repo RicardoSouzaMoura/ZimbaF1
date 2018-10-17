@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zimba.f1.feature.R;
@@ -29,6 +30,7 @@ public class RaceResultsGpsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_race_results, container, false);
+
         TextView circuitNameTV = inflate.findViewById(R.id.circuitName);
         TextView dateTimeRaceTV = inflate.findViewById(R.id.dateTimeRaceId);
 

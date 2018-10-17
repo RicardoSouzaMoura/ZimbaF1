@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.zimba.f1.feature.R;
 import com.zimba.f1.feature.entity.RaceResultsEntity;
@@ -26,6 +28,9 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_races);
+
+        final ProgressBar cursor = this.findViewById(R.id.progress_results_gp);
+        cursor.setVisibility(View.VISIBLE);
 
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
@@ -47,6 +52,7 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
                     racesResultsAdapter = new RacesResultsGpsAdapter(getSupportFragmentManager(), pEntities);
                     viewPager.setAdapter(racesResultsAdapter);
                     tabLayout.setupWithViewPager(viewPager);
+                    cursor.setVisibility(View.INVISIBLE);
                 }
 
                 @Override

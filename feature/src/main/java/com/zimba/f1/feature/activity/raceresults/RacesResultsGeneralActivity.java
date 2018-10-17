@@ -56,6 +56,8 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
+        ab.setTitle("Temporada "+this.seasonYear);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this.seasonYear);
@@ -81,7 +83,8 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         if (menuId == R.id.action_races_menu) {
-            // desempilhar a activity
+            // fechando a atividade
+            this.finish();
             return true;
         } else {// If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.

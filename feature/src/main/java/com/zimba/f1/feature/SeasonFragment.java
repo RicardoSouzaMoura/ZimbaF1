@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.zimba.f1.feature.entity.SeasonGridEntity;
 import com.zimba.f1.feature.service.F1Service;
@@ -19,7 +20,6 @@ import com.zimba.f1.feature.service.SeasonGridListenerInterface;
  */
 public class SeasonFragment extends Fragment {
 
-
     public SeasonFragment() {
         // Required empty public constructor
     }
@@ -30,6 +30,8 @@ public class SeasonFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View seasonFragment = inflater.inflate(R.layout.fragment_season, container, false);
+        final ProgressBar cursor = seasonFragment.findViewById(R.id.progress_season);
+        cursor.setVisibility(View.VISIBLE);
 
         final GridView gridview = seasonFragment.findViewById(R.id.gridSeason);
 
@@ -48,6 +50,7 @@ public class SeasonFragment extends Fragment {
             public void onResponse(SeasonGridEntity[] pEntities) {
                 SeasonAdapter seasonAdapter = new SeasonAdapter(context, pEntities);
                 gridview.setAdapter(seasonAdapter);
+                cursor.setVisibility(View.INVISIBLE);
             }
 
             @Override
