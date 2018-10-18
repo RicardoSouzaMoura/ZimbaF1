@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.zimba.f1.feature.R;
 import com.zimba.f1.feature.entity.RacePositionEntity;
@@ -76,6 +77,7 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_race_results_general, menu);
+        menu.getItem(1).setEnabled(false);
         return true;
     }
 
@@ -118,6 +120,8 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
             final ListView listViewDrivers = rootView.findViewById(R.id.raceResults_general);
+            final ProgressBar cursor = rootView.findViewById(R.id.progress_season);
+            cursor.setVisibility(View.VISIBLE);
 
             try {
                 F1Service f1Service = new F1Service(this.getContext());
@@ -126,6 +130,7 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
                     public void onResponse(RacePositionEntity[] pEntities) {
                         ListViewRaceResultsGeneralDriversAdapter listViewAdapter = new ListViewRaceResultsGeneralDriversAdapter(pEntities);
                         listViewDrivers.setAdapter(listViewAdapter);
+                        cursor.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
@@ -169,6 +174,8 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_results_general, container, false);
             final ListView listViewConstructors = rootView.findViewById(R.id.raceResults_general);
+            final ProgressBar cursor = rootView.findViewById(R.id.progress_season);
+            cursor.setVisibility(View.VISIBLE);
 
             try {
                 F1Service f1Service = new F1Service(this.getContext());
@@ -177,6 +184,7 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
                     public void onResponse(RacePositionEntity[] pEntities) {
                         ListViewRaceResultsGeneralConstructorAdapter listViewAdapter = new ListViewRaceResultsGeneralConstructorAdapter(pEntities);
                         listViewConstructors.setAdapter(listViewAdapter);
+                        cursor.setVisibility(View.INVISIBLE);
                     }
 
                     @Override

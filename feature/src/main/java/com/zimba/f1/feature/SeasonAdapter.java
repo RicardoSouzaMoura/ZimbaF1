@@ -2,6 +2,9 @@ package com.zimba.f1.feature;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -55,17 +58,31 @@ public class SeasonAdapter extends BaseAdapter {
             });
 
             seasonGridLayout.setOrientation(LinearLayout.VERTICAL);
+            //seasonGridLayout.setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams paramsss = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            //seasonGridLayout.setLayoutParams(paramsss);
+            seasonGridLayout.setBackgroundColor(Color.WHITE);
 
             TextView driverChampionNameTV = new TextView(context);
             driverChampionNameTV.setText(seasonGridEntity.getDriverChampionName());
+            driverChampionNameTV.setLayoutParams(paramsss);
+            driverChampionNameTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            driverChampionNameTV.setGravity(Gravity.CENTER);
             seasonGridLayout.addView(driverChampionNameTV);
 
             TextView seasonYearTV = new TextView(context);
             seasonYearTV.setText(seasonGridEntity.getSeasonYear());
+            seasonYearTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            seasonYearTV.setTextColor(Color.RED);
+            seasonYearTV.setLayoutParams(paramsss);
+            seasonYearTV.setGravity(Gravity.CENTER);
             seasonGridLayout.addView(seasonYearTV);
 
             TextView constructorChampionNameTV = new TextView(context);
             constructorChampionNameTV.setText(seasonGridEntity.getConstructorChampionName());
+            constructorChampionNameTV.setLayoutParams(paramsss);
+            constructorChampionNameTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            constructorChampionNameTV.setGravity(Gravity.CENTER);
             seasonGridLayout.addView(constructorChampionNameTV);
 
         } else {

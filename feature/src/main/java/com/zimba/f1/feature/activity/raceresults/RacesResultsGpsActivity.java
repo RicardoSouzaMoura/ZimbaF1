@@ -67,8 +67,8 @@ public class RacesResultsGpsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.raceresults, menu);
-
+        getMenuInflater().inflate(R.menu.menu_race_results_general, menu);
+        menu.getItem(0).setEnabled(false);
         return true;
     }
 

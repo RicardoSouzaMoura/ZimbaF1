@@ -4,6 +4,10 @@
     tools:context="com.zimba.f1.feature.activity.raceresults.RacesResultsGeneralActivity">
     <item
         android:id="@+id/action_races_menu"
-        android:title="Races"
-        app:showAsAction="ifRoom" />
+        android:title="Classificacao GPs"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/raceresults_menu_geral"
+        android:title="Classificacao Geral"
+        app:showAsAction="never"/>
 </menu>
