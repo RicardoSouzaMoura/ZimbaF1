@@ -1,5 +1,6 @@
 package com.zimba.f1.feature.activity.raceresults;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,6 +45,7 @@ public class ListViewRaceResultsGpsDriversAdapter extends BaseAdapter {
         if (convertView == null) {
 
             layoutLayer1 = new LinearLayout(parent.getContext());
+            layoutLayer1.setBackgroundColor(Color.WHITE);
 
             layoutLayer1.setOrientation(LinearLayout.HORIZONTAL);
             ImageView fotoDriver = new ImageView(parent.getContext());

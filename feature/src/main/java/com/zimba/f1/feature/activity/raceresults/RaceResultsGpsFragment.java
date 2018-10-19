@@ -1,6 +1,7 @@
 package com.zimba.f1.feature.activity.raceresults;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +33,9 @@ public class RaceResultsGpsFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_race_results, container, false);
 
         TextView circuitNameTV = inflate.findViewById(R.id.circuitName);
+        circuitNameTV.setTextColor(Color.WHITE);
         TextView dateTimeRaceTV = inflate.findViewById(R.id.dateTimeRaceId);
+        dateTimeRaceTV.setTextColor(Color.WHITE);
 
         ListView listViewPositions = inflate.findViewById(R.id.raceResults_drivers);
 
