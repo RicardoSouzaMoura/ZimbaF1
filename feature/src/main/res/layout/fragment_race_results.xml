@@ -15,12 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/White"
-            android:text="Data: " />
+            android:text="@string/race_result_data_label"
+            android:textAppearance="?android:textAppearanceMedium"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dateTimeRaceId"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_marginLeft="8dp"
+            android:textAppearance="?android:textAppearanceMedium" />
     </LinearLayout>
 
     <LinearLayout
@@ -31,17 +33,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/White"
-            android:text="Circuito: " />
+            android:text="@string/race_result_circuit_label"
+            android:textAppearance="?android:textAppearanceMedium"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/circuitName"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_marginLeft="8dp"
+            android:textAppearance="?android:textAppearanceMedium" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/raceResults_drivers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>
