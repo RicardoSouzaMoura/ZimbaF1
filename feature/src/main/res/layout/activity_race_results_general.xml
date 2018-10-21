@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tabsRacesResultsGeneral"
         style="@style/AppTabLayout"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
         app:tabTextAppearance="@style/AppTabTextAppearance"
         >
     </android.support.design.widget.TabLayout>

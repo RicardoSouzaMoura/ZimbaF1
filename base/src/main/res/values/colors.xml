@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#B11114</color>
     <color name="colorPrimaryDark">#FF000000</color>
-    <color name="colorAccent">#FAE847</color>
+    <color name="colorAccent">#FCD112</color>
     <color name="activityBackground">#FF000000</color>
     <color name="tabTextColor">#FFFFFFFF</color>
 
