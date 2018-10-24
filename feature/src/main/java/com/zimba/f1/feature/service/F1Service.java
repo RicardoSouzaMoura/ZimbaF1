@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 import com.zimba.f1.feature.entity.RacePositionEntity;
 import com.zimba.f1.feature.entity.RaceResultsEntity;
 import com.zimba.f1.feature.entity.SeasonGridEntity;
+import com.zimba.f1.feature.util.JsonParserUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -231,7 +232,7 @@ public class F1Service {
                                 entity.setRaceName(race.getString("raceName"));
                                 entity.setSeasonYear(pSeasonYear);
                                 entity.setDate(race.getString("date"));
-                                entity.setTime(race.getString("time"));
+                                entity.setTime(JsonParserUtil.getString(race, "time"));
                                 JSONObject circuit = race.getJSONObject("Circuit");
                                 entity.setCircuitName(circuit.getString("circuitName"));
                                 JSONObject location = circuit.getJSONObject("Location");

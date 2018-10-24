@@ -245,7 +245,7 @@ public class RacesResultsGeneralActivity extends AppCompatActivity {
                     return "Pilotos";
                 }
                 case 1: {
-                    return "Construtores";
+                    return "Equipes";
                 }
             }
             return super.getPageTitle(position);
